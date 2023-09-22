@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import styles from './header.module.scss';
-import { Avatar, Button, Drawer, DrawerProps, Layout, Menu, Space } from 'antd';
+import { Avatar, Button, Drawer, Layout, Menu, Space } from 'antd';
 import { pages } from '@/components/pages';
 import Link from 'next/link';
 import Image from 'next/image';

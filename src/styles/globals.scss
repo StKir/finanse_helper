@@ -9,3 +9,19 @@
 body {
 	background-color: #f8f8f8;
 }
+.container {
+	padding: 0 50px;
+}
+
+section {
+	margin-bottom: 60px;
+}
+
+@media (max-width: 400px) {
+	.container {
+		padding: 0 20px;
+	}
+	section {
+		margin-bottom: 40px;
+	}
+}

@@ -1,0 +1,23 @@
+.main_wrp {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+// .slider_section {
+// 	padding-left: 50px;
+// }
+.first_slider {
+	width: auto !important;
+	margin-left: 50px;
+}
+.swiper_slider {
+	width: auto !important;
+}
+
+@media (max-width: 770px) {
+	.main_wrp {
+		display: grid;
+		justify-content: initial;
+	}
+}

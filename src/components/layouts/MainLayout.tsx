@@ -1,7 +1,7 @@
 import React, { FC, PropsWithChildren } from 'react';
-import Header from '../header/Header';
-import Footer from '../footer/Footer';
+import Footer from '../smart/footer/Footer';
 import { ConfigProvider } from 'antd';
+import Header from '../smart/header/Header';
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
 	return (

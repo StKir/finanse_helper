@@ -1,0 +1,23 @@
+.valute_card_wrp {
+	padding: 20px 20px 20px 20px;
+	border-radius: 20px;
+	background: #6a81ff;
+	width: min-content;
+	max-width: 154px;
+	h3 {
+		color: #fff;
+		font-size: 36px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 110.5%;
+		margin-bottom: 10px;
+	}
+	span {
+		color: #fff;
+		font-family: Jost;
+		font-size: 36px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 110.5%;
+	}
+}
