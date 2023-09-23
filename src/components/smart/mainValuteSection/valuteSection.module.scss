@@ -1,0 +1,26 @@
+.first_slider {
+	width: auto !important;
+	margin-left: 50px;
+	background: #6a81ff;
+	padding: 20px;
+	border-radius: 20px;
+	height: auto;
+	h3 {
+		font-family: Jost;
+		font-size: 36px;
+		font-style: normal;
+		font-weight: 600;
+		color: #fff;
+		margin-bottom: 5px;
+	}
+}
+.swiper_slider {
+	width: auto !important;
+}
+
+@media (max-width: 400px) {
+	.first_slider {
+		width: auto !important;
+		margin-left: 20px;
+	}
+}

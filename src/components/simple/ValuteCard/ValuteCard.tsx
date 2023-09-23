@@ -1,10 +1,14 @@
+import { FC } from 'react';
 import styles from './valuteCard.module.scss';
+import { TValuteRes } from '@/interfaces/storeInterfaces/store.interfaces';
 
-const ValuteCard = () => {
+type TVaputeCardProps = Pick<TValuteRes, 'CharCode' | 'Nominal' | 'Value'>;
+
+const ValuteCard: FC<TVaputeCardProps> = ({ CharCode, Nominal, Value }) => {
 	return (
 		<div className={styles.valute_card_wrp}>
-			<h3>USD</h3>
-			<span>84.96₽</span>
+			<h3>{CharCode}</h3>
+			<span>{(Value / Nominal).toFixed(3)}₽</span>
 		</div>
 	);
 };
