@@ -1,12 +1,13 @@
 .main_wrp {
-	display: flex;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 	justify-content: space-between;
 	gap: 20px;
 }
 
-@media (max-width: 770px) {
+@media (max-width: 800px) {
 	.main_wrp {
-		display: grid;
+		grid-template-columns: 1fr;
 		justify-content: initial;
 	}
 }

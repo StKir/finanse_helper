@@ -1,4 +1,4 @@
-import { getAllValut, selectAll } from '@/store/slices/ValuteSlice';
+import { getAllValut, sortByValue } from '@/store/slices/ValuteSlice';
 import styles from './valuteSection.module.scss';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { FC, useEffect, useMemo, useState } from 'react';
@@ -26,7 +26,7 @@ const ValuteSection: FC = () => {
 const ValuteSlier = () => {
 	const [name, SetName] = useState<string>('');
 	const dispath = useAppDispatch();
-	const valutes = useAppSelector(selectAll);
+	const valutes = useAppSelector(sortByValue);
 	const loading = useAppSelector((state) => state.valute.LoadingStatus);
 
 	useEffect(() => {

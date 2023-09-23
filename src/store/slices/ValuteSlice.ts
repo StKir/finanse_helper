@@ -2,7 +2,8 @@ import {
 	createSlice,
 	createAsyncThunk,
 	createEntityAdapter,
-	PayloadAction
+	PayloadAction,
+	createSelector
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
@@ -22,7 +23,7 @@ const initialState = {
 } as ValuteAdapter;
 
 export const getAllValut = createAsyncThunk<IValut>(
-	'words/getAllTags',
+	'valute/getAllTags',
 	async () => {
 		const res = await axios({
 			method: 'GET',
@@ -31,6 +32,17 @@ export const getAllValut = createAsyncThunk<IValut>(
 		return res.data;
 	}
 );
+
+// export const getAllNews = createAsyncThunk<any>(
+// 	'valute/getAllNews',
+// 	async () => {
+// 		const res = await axios({
+// 			method: 'GET',
+// 			url: `https://newsapi.org/v2/top-headlines?country=ru&category=business&apiKey=${process.env.NEXT_PUBLIC_REACT_NEWS_KEY}`
+// 		});
+// 		return res.data;
+// 	}
+// );
 
 const valuteSlice = createSlice({
 	name: 'valute',
@@ -55,6 +67,9 @@ const valuteSlice = createSlice({
 			.addCase(getAllValut.rejected, (state) => {
 				state.LoadingStatus = 'error';
 			});
+		// .addCase(getAllNews.fulfilled, (state, { payload }) => {
+		// 	console.log(payload);
+		// });
 	}
 });
 
@@ -63,5 +78,11 @@ const { reducer, actions } = valuteSlice;
 export const { selectAll } = ValuteAdater.getSelectors<RootState>(
 	(state) => state.valute
 );
+
+export const sortByValue = createSelector(selectAll, (valutes) => {
+	return valutes.sort((a, b) => {
+		return b.Value / b.Nominal - a.Value / a.Nominal;
+	});
+});
 
 export default reducer;

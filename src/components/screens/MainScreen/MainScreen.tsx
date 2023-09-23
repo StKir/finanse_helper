@@ -10,7 +10,7 @@ const MainScreen = () => {
 			<ValuteSection />
 			<NewServiceSection />
 			<div className='container'>
-				<Title>Новости</Title>
+				<Title desc='из мира финансов'>Новости</Title>
 			</div>
 		</>
 	);
@@ -25,12 +25,26 @@ const NewServiceSection = () => {
 					<NewService
 						title={'Калькулятор ипотеки'}
 						description={'Подсчитай сколько стоит жилищный вопрос'}
-						link={'/'}
+						link={'/services/ipoteka'}
 					/>
 					<NewService
-						title={'Калькулятор ипотеки'}
-						description={'Подсчитай сколько стоит жилищный вопрос'}
-						link={'/'}
+						title={'Калькулятор вкладов'}
+						description={
+							'Узнай сколько заработаешь если вложишь деньги под процент'
+						}
+						link={'/services/vklad'}
+					/>
+					<NewService
+						title={'Конвертер валют'}
+						description={'Переведи'}
+						link={'/services/convector'}
+					/>
+					<NewService
+						title={'Обменник криптовалюты'}
+						description={
+							'Обменник с низкой коммисией от разработчика приложения'
+						}
+						link={'https://finance-5f1fd85y5-stkir.vercel.app'}
 					/>
 				</div>
 			</div>
