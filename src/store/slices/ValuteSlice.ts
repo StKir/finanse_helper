@@ -11,7 +11,7 @@ import {
 	IValut,
 	TValuteRes,
 	ValuteAdapter
-} from '@/interfaces/storeInterfaces/store.interfaces';
+} from '@/interfaces/store.interfaces';
 
 const ValuteAdater = createEntityAdapter<TValuteRes>();
 

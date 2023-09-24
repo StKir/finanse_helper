@@ -1,10 +1,10 @@
 import NewService from '@/components/simple/NewService/NewService';
 import Title from '@/components/ui/title/Title';
-import styles from './mainScreen.module.scss';
+import styles from './ServicesScreen.module.scss';
 import 'swiper/css';
 import ValuteSection from '@/components/smart/mainValuteSection/ValuteSection';
 
-const MainScreen = () => {
+const ServicesScreen = () => {
 	return (
 		<>
 			<ValuteSection />
@@ -20,7 +20,7 @@ const NewServiceSection = () => {
 	return (
 		<section>
 			<div className='container'>
-				<Title>Новинки</Title>
+				<Title>Сервисы</Title>
 				<div className={styles.main_wrp}>
 					<NewService
 						title={'Калькулятор ипотеки'}
@@ -52,4 +52,4 @@ const NewServiceSection = () => {
 	);
 };
 
-export default MainScreen;
+export default ServicesScreen;

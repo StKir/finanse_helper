@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styles from './valuteCard.module.scss';
-import { TValuteRes } from '@/interfaces/storeInterfaces/store.interfaces';
+import { TValuteRes } from '@/interfaces/store.interfaces';
 
 type TVaputeCardProps = Pick<TValuteRes, 'CharCode' | 'Nominal' | 'Value'>;
 
