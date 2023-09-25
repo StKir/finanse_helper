@@ -1,4 +1,4 @@
-import { IPage } from '@/interfaces/mainTypes/pages.interfaces';
+import { IPage } from '@/interfaces/pages.interfaces';
 
 export const pages: IPage[] = [
 	{

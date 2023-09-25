@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import valuteSlice from './slices/ValuteSlice';
+import userSlice from './slices/UserSlice';
 
 const store = configureStore({
 	reducer: {
-		valute: valuteSlice
+		valute: valuteSlice,
+		user: userSlice
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({ serializableCheck: false }),

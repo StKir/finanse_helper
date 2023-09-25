@@ -6,6 +6,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@/assets/img/logo.png';
 import { MenuOutlined, UserOutlined } from '@ant-design/icons';
+import Auth from '../auth/Auth';
+import { getAuth } from 'firebase/auth';
 
 const Header: FC = () => {
 	const { Header } = Layout;
@@ -20,6 +22,9 @@ const Header: FC = () => {
 
 const Navigations = () => {
 	const [open, setOpen] = useState<boolean>(false);
+	const [authModal, setAuthModal] = useState<boolean>(false);
+	const auth = getAuth();
+	console.log(auth.currentUser);
 
 	const onClose = () => {
 		setOpen(false);
@@ -36,8 +41,10 @@ const Navigations = () => {
 			</Link>
 		)
 	}));
+
 	return (
 		<div className={styles.menu}>
+			<Auth isOpen={authModal} setOpen={setAuthModal} />
 			<Link href={'/'} className={styles.header_logo}>
 				<Image priority={true} src={Logo} alt='Logo' />
 			</Link>
@@ -56,7 +63,11 @@ const Navigations = () => {
 							icon={<UserOutlined />}
 						/>
 					</Space>
-					<Button type='default' size='large'>
+					<Button
+						type='default'
+						size='large'
+						onClick={() => setAuthModal(true)}
+					>
 						Войти
 					</Button>
 				</div>
@@ -84,7 +95,11 @@ const Navigations = () => {
 						onClick={onClose}
 						items={items}
 					/>
-					<Button type='default' size='middle'>
+					<Button
+						type='default'
+						size='middle'
+						onClick={() => setAuthModal(true)}
+					>
 						Войти
 					</Button>
 				</div>

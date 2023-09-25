@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import React, { FC, PropsWithChildren } from 'react';
-import Footer from '../smart/footer/Footer';
+import Footer from '../simple/footer/Footer';
 import { ConfigProvider } from 'antd';
 import Header from '../smart/header/Header';
 import store from '@/store/store';
@@ -16,8 +16,10 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
 				}}
 			>
 				<Provider store={store}>
-					<Header />
-					{children}
+					<div style={{ minHeight: 'calc(100vh - 70px)' }}>
+						<Header />
+						{children}
+					</div>
 					<Footer />
 				</Provider>
 			</ConfigProvider>
