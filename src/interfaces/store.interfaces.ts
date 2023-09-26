@@ -22,3 +22,20 @@ export interface IValuteInfo {
 export interface TValuteRes extends IValuteInfo {
 	id: string;
 }
+
+export interface IUserStore {
+	email: string;
+	token: string;
+	id: string | number;
+	authModalIsOpen: boolean;
+	authModalType: TAuthModalType;
+	authLoadingStatus: TAuthLoadingStatus;
+}
+
+export type TAuthModalType = 'log' | 'reg';
+export type TAuthLoadingStatus = 'idle' | 'loading' | 'error' | 'success';
+
+export type IUserStorePayload = Omit<
+	IUserStore,
+	'authModalIsOpen' | 'authModalType'
+>;

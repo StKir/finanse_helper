@@ -23,7 +23,7 @@ const initialState = {
 } as ValuteAdapter;
 
 export const getAllValut = createAsyncThunk<IValut>(
-	'valute/getAllTags',
+	'valute/getAllValut',
 	async () => {
 		const res = await axios({
 			method: 'GET',

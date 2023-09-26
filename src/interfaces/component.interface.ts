@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { MortgageData } from './mortgage.interface';
+import { IUserStorePayload, TAuthModalType } from './store.interfaces';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 export interface TColums {
 	title: string;
@@ -14,11 +16,12 @@ export interface ITable {
 
 export interface IAuthProps {
 	isOpen: boolean;
-	setOpen: (arg: boolean) => void;
 }
 
-export interface IAuthType {
-	setAuthType: Dispatch<SetStateAction<TModalType>>;
+export interface IPropsDispathc {
+	dispathc: Dispatch<
+		PayloadAction<TAuthModalType | IUserStorePayload | boolean>
+	>;
 }
 
 export interface IRegistrationFormData {
@@ -34,7 +37,7 @@ export type TodoPreview = Omit<IRegistrationFormData, 'confirm'>;
 export interface IAuthorizationFormData {
 	password: string;
 	remember: boolean;
-	username: string;
+	email: string;
 }
 
 export type TModalType = 'reg' | 'log';

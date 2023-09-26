@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './header.module.scss';
 import { Avatar, Button, Drawer, Layout, Menu, Space } from 'antd';
 import { pages } from '@/components/pages';
@@ -7,7 +7,11 @@ import Image from 'next/image';
 import Logo from '@/assets/img/logo.png';
 import { MenuOutlined, UserOutlined } from '@ant-design/icons';
 import Auth from '../auth/Auth';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { removeUser, setModalStatus, setUser } from '@/store/slices/UserSlice';
+import { useAuth } from '@/hooks/useAuth';
+import { getTestValue, setTestValue } from '@/store/slices/SavedSlice';
 
 const Header: FC = () => {
 	const { Header } = Layout;
@@ -22,15 +26,41 @@ const Header: FC = () => {
 
 const Navigations = () => {
 	const [open, setOpen] = useState<boolean>(false);
-	const [authModal, setAuthModal] = useState<boolean>(false);
-	const auth = getAuth();
-	console.log(auth.currentUser);
+	const { isAuth } = useAuth();
+	const authModal = useAppSelector((state) => state.user.authModalIsOpen);
+	const dispathc = useAppDispatch();
+	const { currentUser } = getAuth();
+
+	useEffect(() => {
+		if (currentUser) {
+			dispathc(
+				setUser({
+					id: currentUser.uid,
+					email: currentUser.email!,
+					token: currentUser.uid,
+					authLoadingStatus: 'success'
+				})
+			);
+		}
+	}, [currentUser, dispathc]);
 
 	const onClose = () => {
 		setOpen(false);
 	};
 	const showDrawer = () => {
 		setOpen(true);
+	};
+
+	const authHandle = (isAuth: boolean) => {
+		if (isAuth) {
+			const auth = getAuth();
+			signOut(auth).then(() => {
+				dispathc(removeUser());
+			});
+			localStorage.removeItem('user');
+		} else {
+			dispathc(setModalStatus(true));
+		}
 	};
 
 	const items = pages.map(({ title, href, id }) => ({
@@ -44,7 +74,13 @@ const Navigations = () => {
 
 	return (
 		<div className={styles.menu}>
-			<Auth isOpen={authModal} setOpen={setAuthModal} />
+			<Auth isOpen={authModal} />
+			<Button type='link' onClick={() => dispathc(setTestValue('user2321'))}>
+				Test
+			</Button>
+			<Button type='link' onClick={() => dispathc(getTestValue('user2321'))}>
+				Test
+			</Button>
 			<Link href={'/'} className={styles.header_logo}>
 				<Image priority={true} src={Logo} alt='Logo' />
 			</Link>
@@ -66,9 +102,9 @@ const Navigations = () => {
 					<Button
 						type='default'
 						size='large'
-						onClick={() => setAuthModal(true)}
+						onClick={() => authHandle(isAuth)}
 					>
-						Войти
+						{isAuth ? 'Выйти' : 'Войти'}
 					</Button>
 				</div>
 			</div>
@@ -98,9 +134,9 @@ const Navigations = () => {
 					<Button
 						type='default'
 						size='middle'
-						onClick={() => setAuthModal(true)}
+						onClick={() => authHandle(isAuth)}
 					>
-						Войти
+						{isAuth ? 'Выйти' : 'Войти'}
 					</Button>
 				</div>
 			</Drawer>
