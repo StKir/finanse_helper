@@ -11,7 +11,6 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { removeUser, setModalStatus, setUser } from '@/store/slices/UserSlice';
 import { useAuth } from '@/hooks/useAuth';
-import { getTestValue, setTestValue } from '@/store/slices/SavedSlice';
 
 const Header: FC = () => {
 	const { Header } = Layout;
@@ -75,12 +74,6 @@ const Navigations = () => {
 	return (
 		<div className={styles.menu}>
 			<Auth isOpen={authModal} />
-			<Button type='link' onClick={() => dispathc(setTestValue('user2321'))}>
-				Test
-			</Button>
-			<Button type='link' onClick={() => dispathc(getTestValue('user2321'))}>
-				Test
-			</Button>
 			<Link href={'/'} className={styles.header_logo}>
 				<Image priority={true} src={Logo} alt='Logo' />
 			</Link>

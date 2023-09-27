@@ -2,15 +2,34 @@ import ServicesLayout from '@/components/layouts/ServicesLayout';
 import TableSection from '@/components/simple/Table/Table';
 import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/PaymentDataExcelExporter';
 import Title from '@/components/ui/title/Title';
+import { useAuth } from '@/hooks/useAuth';
 import useMortgageCalculator from '@/hooks/useMortgageCalculator';
 import { TColums } from '@/interfaces/component.interface';
 import { MortgageInput } from '@/interfaces/mortgage.interface';
+import { setSavedData } from '@/store/slices/SavedSlice';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 import { Button, Form, Input, Radio } from 'antd';
 
 const IpotekaService = () => {
 	const [form] = Form.useForm();
+	const dispathc = useAppDispatch();
+	const { isAuth, id } = useAuth();
+	const savedLoadingStatus = useAppSelector(
+		(state) => state.saved.loadingStatus
+	);
 
 	const { mortgageData, calculateMortgage } = useMortgageCalculator();
+
+	const onResetCalculator = () => {
+		form.resetFields();
+		calculateMortgage({
+			downPayment: 0,
+			propertyPrice: 0,
+			loanTermMonths: 0,
+			interestRate: 0,
+			paymentType: 'Аннуитетные'
+		});
+	};
 
 	const onSubmitForm = (value: MortgageInput): void => {
 		calculateMortgage({
@@ -76,18 +95,30 @@ const IpotekaService = () => {
 				>
 					<Input type='number' placeholder='Введите ставку' />
 				</Form.Item>
-				<Form.Item>
-					<Button
-						htmlType='submit'
-						type='primary'
-						style={{
-							marginRight: 20
-						}}
-					>
+				<div className='btn_group'>
+					<Button htmlType='submit' type='primary'>
 						Расчитать
 					</Button>
+					<Button type='dashed' onClick={onResetCalculator}>
+						Новый расчет
+					</Button>
+					<Button
+						disabled={!(isAuth && !!mortgageData.length)}
+						type='default'
+						onClick={() =>
+							dispathc(
+								setSavedData({
+									id,
+									type: 'mortage',
+									data: mortgageData
+								})
+							)
+						}
+					>
+						Сохранить расчет в профиль
+					</Button>
 					<PaymentDataExcelExporter paymentData={mortgageData} />
-				</Form.Item>
+				</div>
 			</Form>
 			<TableSection paymentData={mortgageData} columns={columns} />
 		</ServicesLayout>

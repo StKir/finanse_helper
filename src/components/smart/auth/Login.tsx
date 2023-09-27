@@ -15,7 +15,7 @@ import { FC, useState } from 'react';
 const AuthorizationForm: FC<IPropsDispathc> = ({ dispathc }) => {
 	const [errorMessage, setErrorMessage] = useState<string>('');
 
-	const errorSwitch = (massage: any): void => {
+	const errorSwitch = (massage: string): void => {
 		switch (massage) {
 			case 'auth/invalid-login-credentials':
 				setErrorMessage('Неверные логин или пароль');

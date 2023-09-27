@@ -21,14 +21,17 @@ export const AuthorizationForm: FC<IPropsDispathc> = ({ dispathc }) => {
 					localStorage.setItem('user', JSON.stringify(value));
 				}
 				const user = userCredential.user;
+				console.log(userCredential.user);
+
 				// const token = await user.getIdTokenResult();
 				// console.log(token);
-				const token = getAuth().createCustomToken(uid);
+				// const token = getAuth().createCustomToken(uid);
 
 				dispathc(
 					setUser({
 						email: user.email || value.email,
 						token: user.email || value.email,
+						username: user.displayName!,
 						id: user.uid,
 						authLoadingStatus: 'success'
 					})

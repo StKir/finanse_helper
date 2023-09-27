@@ -10,6 +10,7 @@ const initialState = {
 	email: null,
 	token: null,
 	id: null,
+	username: null,
 	authModalIsOpen: false,
 	authLoadingStatus: 'idle',
 	authModalType: 'log'
@@ -23,12 +24,14 @@ const valuteSlice = createSlice({
 			state.email = payload.email;
 			state.token = payload.token;
 			state.id = payload.id;
+			state.username = payload.username;
 			state.authLoadingStatus = 'success';
 		},
 		removeUser(state) {
 			state.email = null!;
 			state.token = null!;
 			state.id = null!;
+			state.username = null!;
 		},
 		setModalStatus(state, { payload }: PayloadAction<boolean>) {
 			state.authModalIsOpen = payload;

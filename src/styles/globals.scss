@@ -17,6 +17,13 @@ section {
 	margin-bottom: 60px;
 }
 
+.btn_group {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
 @media (max-width: 400px) {
 	.container {
 		padding: 0 20px;

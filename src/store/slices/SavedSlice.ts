@@ -6,70 +6,108 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
+import { MortgageData } from '@/interfaces/mortgage.interface';
 
 interface ISavedSlice {
-	number: number | null;
-	data: any;
+	loadingStatus: 'idle' | 'error' | 'loading';
+	data: ISavedData[];
+}
+
+interface ISavedData {
+	type: string;
+	data: MortgageData[] | any; //Потом добавить новые
+}
+
+interface ISavedRespons {
+	['username']: ISavedData[];
+}
+
+interface ISavedProps {
+	user: string;
+	data: ISavedData;
+}
+
+interface ISavedSet {
+	id: string | number;
+	type: string;
+	data: MortgageData[];
 }
 
 const initialState = {
-	number: null,
+	loadingStatus: 'idle',
 	data: null
-} as ISavedSlice;
+} as unknown as ISavedSlice;
 
-export const setTestValue = createAsyncThunk<any, string>(
-	'saved/setTestValue',
-	async (string) => {
+export const setSavedData = createAsyncThunk<any, ISavedSet>(
+	'saved/setSavedData',
+	async ({ id, data, type }) => {
 		const res = await axios({
 			method: 'POST',
-			url: `https://finanse-love-default-rtdb.europe-west1.firebasedatabase.app/${string}.json`,
+			url: `${process.env.NEXT_PUBLIC_DATABASE_LINK}${id}.json`,
 			data: {
-				key: string,
-				user: 2123
+				type,
+				data
 			}
 		});
 		return res.data;
 	}
 );
 
-export const getTestValue = createAsyncThunk<any, string>(
-	'saved/getTestValue',
-	async (string) => {
+export const getSavedData = createAsyncThunk<ISavedRespons, string | number>(
+	'saved/getSavedData',
+	async (id) => {
 		const res = await axios({
 			method: 'GET',
-			url: `https://finanse-love-default-rtdb.europe-west1.firebasedatabase.app/${string}.json`
+			url: `${process.env.NEXT_PUBLIC_DATABASE_LINK}${id}.json`
 		});
 		return res.data;
 	}
 );
-
-// export const getAllValut = createAsyncThunk<IValut>(
-// 	'valute/getAllValut',
-// 	async () => {
-// 		const res = await axios({
-// 			method: 'GET',
-// 			url: `https://www.cbr-xml-daily.ru/daily_json.js`
-// 		});
-// 		return res.data;
-// 	}
-// );
 
 const SavedSlice = createSlice({
 	name: 'saved',
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
-		builder.addCase(setTestValue.fulfilled, (state, { payload }) => {
-			console.log(payload);
+		builder.addCase(setSavedData.pending, (state) => {
+			state.loadingStatus = 'loading';
 		});
-		builder.addCase(getTestValue.fulfilled, (state, { payload }) => {
-			const data = Object.values(payload).map((el) => {
+		builder.addCase(setSavedData.rejected, (state) => {
+			state.loadingStatus = 'error';
+		});
+		builder.addCase(setSavedData.fulfilled, (state, { payload }) => {
+			console.log(payload);
+
+			state.loadingStatus = 'idle';
+		});
+		builder.addCase(getSavedData.fulfilled, (state, { payload }) => {
+			state.data = Object.values(payload).map((el) => {
 				return el;
 			});
-			state.data = data;
+			state.loadingStatus = 'idle';
+		});
+		builder.addCase(getSavedData.pending, (state) => {
+			state.loadingStatus = 'loading';
+		});
+		builder.addCase(getSavedData.rejected, (state) => {
+			state.loadingStatus = 'error';
+			state.data = null!;
 		});
 	}
 });
+
+const selectData = (state: RootState) => state.saved.data;
+const getAllMortgageSelector = createSelector([selectData], (selectData) =>
+	selectData.filter((el) => {
+		return el.type === 'mortgage';
+	})
+);
+
+const getAllВepositsSelector = createSelector([selectData], (selectData) =>
+	selectData.filter((el) => {
+		return el.type === 'deposit';
+	})
+);
 
 const { reducer, actions } = SavedSlice;
 

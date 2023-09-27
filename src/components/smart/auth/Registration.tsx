@@ -2,7 +2,6 @@ import {
 	IPropsDispathc,
 	IRegistrationFormData
 } from '@/interfaces/component.interface';
-import { setTestValue } from '@/store/slices/SavedSlice';
 import {
 	changeModalType,
 	setModalStatus,
@@ -26,24 +25,27 @@ const RegistrationForm: FC<IPropsDispathc> = ({ dispathc }) => {
 	const onFinish = async (value: IRegistrationFormData) => {
 		const auth = getAuth();
 		try {
-			await createUserWithEmailAndPassword(auth, value.email, value.password)
-				.then(async ({ user }) => {
-					const token = await user.getIdTokenResult();
-					dispathc(
-						setUser({
-							email: user.email || value.email,
-							token: token.token,
-							id: user.uid,
-							authLoadingStatus: 'success'
-						})
-					);
-					dispathc(setModalStatus(false));
-				})
-				.catch(console.error);
-			auth.currentUser &&
-				(await updateProfile(auth.currentUser, {
-					displayName: value.username
-				}));
+			await createUserWithEmailAndPassword(
+				auth,
+				value.email,
+				value.password
+			).then(async ({ user }) => {
+				const token = await user.getIdTokenResult();
+				auth.currentUser &&
+					(await updateProfile(auth.currentUser, {
+						displayName: value.username
+					}));
+				dispathc(
+					setUser({
+						email: user.email || value.email,
+						token: token.token,
+						username: user.displayName!,
+						id: user.uid,
+						authLoadingStatus: 'success'
+					})
+				);
+				dispathc(setModalStatus(false));
+			});
 		} catch (err) {
 			console.log(err);
 		}

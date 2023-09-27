@@ -27,6 +27,7 @@ export interface IUserStore {
 	email: string;
 	token: string;
 	id: string | number;
+	username: string;
 	authModalIsOpen: boolean;
 	authModalType: TAuthModalType;
 	authLoadingStatus: TAuthLoadingStatus;

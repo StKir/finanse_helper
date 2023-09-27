@@ -41,7 +41,7 @@ const PaymentDataExcelExporter: React.FC<PaymentDataExcelExporterProps> = ({
 	};
 	return (
 		<Button
-			type={paymentData.length ? 'primary' : 'dashed'}
+			type={'dashed'}
 			disabled={!(paymentData.length > 1)}
 			onClick={exportToExcel}
 		>
