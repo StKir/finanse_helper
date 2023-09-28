@@ -9,12 +9,13 @@ import { RootState } from '../store';
 import { MortgageData } from '@/interfaces/mortgage.interface';
 
 interface ISavedSlice {
-	loadingStatus: 'idle' | 'error' | 'loading';
+	loadingStatus: 'idle' | 'error' | 'loading' | 'success';
 	data: ISavedData[];
 }
 
 interface ISavedData {
 	type: string;
+	name: string;
 	data: MortgageData[] | any; //Потом добавить новые
 }
 
@@ -22,15 +23,11 @@ interface ISavedRespons {
 	['username']: ISavedData[];
 }
 
-interface ISavedProps {
-	user: string;
-	data: ISavedData;
-}
-
 interface ISavedSet {
 	id: string | number;
 	type: string;
-	data: MortgageData[];
+	name: string;
+	data: MortgageData[] | any; //Потом добавить новые
 }
 
 const initialState = {
@@ -40,13 +37,14 @@ const initialState = {
 
 export const setSavedData = createAsyncThunk<any, ISavedSet>(
 	'saved/setSavedData',
-	async ({ id, data, type }) => {
+	async ({ id, data, type, name }) => {
 		const res = await axios({
 			method: 'POST',
 			url: `${process.env.NEXT_PUBLIC_DATABASE_LINK}${id}.json`,
 			data: {
 				type,
-				data
+				data,
+				name
 			}
 		});
 		return res.data;
@@ -67,7 +65,11 @@ export const getSavedData = createAsyncThunk<ISavedRespons, string | number>(
 const SavedSlice = createSlice({
 	name: 'saved',
 	initialState,
-	reducers: {},
+	reducers: {
+		resetLoadingStatus(state) {
+			state.loadingStatus = 'idle';
+		}
+	},
 	extraReducers: (builder) => {
 		builder.addCase(setSavedData.pending, (state) => {
 			state.loadingStatus = 'loading';
@@ -78,7 +80,7 @@ const SavedSlice = createSlice({
 		builder.addCase(setSavedData.fulfilled, (state, { payload }) => {
 			console.log(payload);
 
-			state.loadingStatus = 'idle';
+			state.loadingStatus = 'success';
 		});
 		builder.addCase(getSavedData.fulfilled, (state, { payload }) => {
 			state.data = Object.values(payload).map((el) => {
@@ -97,6 +99,7 @@ const SavedSlice = createSlice({
 });
 
 const selectData = (state: RootState) => state.saved.data;
+
 const getAllMortgageSelector = createSelector([selectData], (selectData) =>
 	selectData.filter((el) => {
 		return el.type === 'mortgage';
@@ -110,5 +113,7 @@ const getAllВepositsSelector = createSelector([selectData], (selectData) =>
 );
 
 const { reducer, actions } = SavedSlice;
+
+export const { resetLoadingStatus } = actions;
 
 export default reducer;

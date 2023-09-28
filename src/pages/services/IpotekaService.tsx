@@ -5,27 +5,32 @@ import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/P
 import Title from '@/components/ui/title/Title';
 import { useAuth } from '@/hooks/useAuth';
 import useMortgageCalculator from '@/hooks/useMortgageCalculator';
-import { IMessageProps } from '@/interfaces/component.interface';
 import { MortgageInput } from '@/interfaces/mortgage.interface';
 import { resetLoadingStatus, setSavedData } from '@/store/slices/SavedSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { Button, Form, Input, Radio, message } from 'antd';
+import { Button, Form, Input, Radio } from 'antd';
 import { useEffect, useState } from 'react';
 
-const IpotekaService = () => {
+export const IpotekaService = () => {
 	const [form] = Form.useForm();
 	const [mortageName, SetMortageName] = useState<string>('');
-	const [messageApi, contextHolder] = message.useMessage();
 	const dispathc = useAppDispatch();
 	const { isAuth, id } = useAuth();
 	const savedLoadingStatus = useAppSelector(
 		(state) => state.saved.loadingStatus
 	);
 
-	const messageForStatusSave = ({ type, content }: IMessageProps) => {
+	const successMessage = () => {
 		messageApi.open({
-			type: type,
-			content: content
+			type: 'success',
+			content: 'This is a success message'
+		});
+	};
+
+	const errorMessage = () => {
+		messageApi.open({
+			type: 'error',
+			content: 'This is an error message'
 		});
 	};
 
@@ -34,33 +39,6 @@ const IpotekaService = () => {
 			dispathc(resetLoadingStatus());
 		};
 	});
-
-	useEffect(() => {
-		switch (savedLoadingStatus) {
-			case 'loading':
-				messageForStatusSave({
-					type: 'loading',
-					content: 'Сохранение'
-				});
-				break;
-			case 'error':
-				messageForStatusSave({
-					type: 'error',
-					content: 'Ошибка сохранения'
-				});
-				break;
-			case 'success':
-				messageForStatusSave({
-					type: 'success',
-					content: 'Сохранено'
-				});
-				SetMortageName('');
-				break;
-			default:
-				return;
-		}
-		// eslint-disable-next-line
-	}, [savedLoadingStatus]);
 
 	const { mortgageData, calculateMortgage } = useMortgageCalculator();
 
@@ -73,7 +51,6 @@ const IpotekaService = () => {
 			interestRate: 0,
 			paymentType: 'Аннуитетные'
 		});
-		SetMortageName('');
 	};
 
 	const onSave = () => {
@@ -99,7 +76,6 @@ const IpotekaService = () => {
 
 	return (
 		<ServicesLayout>
-			{contextHolder}
 			<Title>Расчет ипотеки</Title>
 			<Form
 				form={form}
@@ -186,5 +162,3 @@ const IpotekaService = () => {
 		</ServicesLayout>
 	);
 };
-
-export default IpotekaService;

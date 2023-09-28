@@ -9,6 +9,11 @@ export interface TColums {
 	key: string;
 }
 
+interface IMessageProps {
+	type: NoticeType;
+	content: string;
+}
+
 export interface ITable {
 	paymentData: MortgageData[];
 	columns: TColums[];
