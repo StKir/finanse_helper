@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { MortgageData } from './mortgage.interface';
 import { IUserStorePayload, TAuthModalType } from './store.interfaces';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { NoticeType } from 'antd/es/message/interface';
 
 export interface TColums {
 	title: string;
@@ -9,7 +10,7 @@ export interface TColums {
 	key: string;
 }
 
-interface IMessageProps {
+export interface IMessageProps {
 	type: NoticeType;
 	content: string;
 }

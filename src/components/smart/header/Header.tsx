@@ -36,6 +36,7 @@ const Navigations = () => {
 				setUser({
 					id: currentUser.uid,
 					email: currentUser.email!,
+					username: currentUser.displayName!,
 					token: currentUser.uid,
 					authLoadingStatus: 'success'
 				})
@@ -85,13 +86,13 @@ const Navigations = () => {
 					items={items}
 				/>
 				<div className={styles.right_auth}>
-					<Space>
+					{isAuth ? (
 						<Avatar
 							className={styles.avatar}
 							size={40}
 							icon={<UserOutlined />}
 						/>
-					</Space>
+					) : null}
 					<Button
 						type='default'
 						size='large'

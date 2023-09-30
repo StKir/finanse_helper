@@ -3,8 +3,10 @@ import { useState } from 'react';
 
 function useMortgageCalculator() {
 	const [mortgageData, setMortgageData] = useState<MortgageData[]>([]);
+	const [mortgageInput, setMortgageInput] = useState<MortgageInput>();
 
 	const calculateMortgage = (mortgageInput: MortgageInput) => {
+		setMortgageInput(mortgageInput);
 		let remainingLoan = mortgageInput.propertyPrice - mortgageInput.downPayment;
 
 		const monthlyInterestRate = mortgageInput.interestRate / 100 / 12;
@@ -38,7 +40,8 @@ function useMortgageCalculator() {
 
 	return {
 		mortgageData,
-		calculateMortgage
+		calculateMortgage,
+		mortgageInput
 	};
 }
 

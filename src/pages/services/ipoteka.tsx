@@ -22,6 +22,9 @@ const IpotekaService = () => {
 		(state) => state.saved.loadingStatus
 	);
 
+	const { mortgageData, calculateMortgage, mortgageInput } =
+		useMortgageCalculator();
+
 	const messageForStatusSave = ({ type, content }: IMessageProps) => {
 		messageApi.open({
 			type: type,
@@ -62,8 +65,6 @@ const IpotekaService = () => {
 		// eslint-disable-next-line
 	}, [savedLoadingStatus]);
 
-	const { mortgageData, calculateMortgage } = useMortgageCalculator();
-
 	const onResetCalculator = () => {
 		form.resetFields();
 		calculateMortgage({
@@ -82,7 +83,8 @@ const IpotekaService = () => {
 				id,
 				type: 'mortage',
 				data: mortgageData,
-				name: mortageName
+				name: mortageName,
+				initial: mortgageInput!
 			})
 		);
 	};

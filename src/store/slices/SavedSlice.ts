@@ -6,45 +6,28 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
-import { MortgageData } from '@/interfaces/mortgage.interface';
-
-interface ISavedSlice {
-	loadingStatus: 'idle' | 'error' | 'loading' | 'success';
-	data: ISavedData[];
-}
-
-interface ISavedData {
-	type: string;
-	name: string;
-	data: MortgageData[] | any; //Потом добавить новые
-}
-
-interface ISavedRespons {
-	['username']: ISavedData[];
-}
-
-interface ISavedSet {
-	id: string | number;
-	type: string;
-	name: string;
-	data: MortgageData[] | any; //Потом добавить новые
-}
+import {
+	ISavedRespons,
+	ISavedSet,
+	ISavedSlice
+} from '@/interfaces/store.interfaces';
 
 const initialState = {
 	loadingStatus: 'idle',
-	data: null
+	data: []
 } as unknown as ISavedSlice;
 
 export const setSavedData = createAsyncThunk<any, ISavedSet>(
 	'saved/setSavedData',
-	async ({ id, data, type, name }) => {
+	async ({ id, data, type, name, initial }) => {
 		const res = await axios({
 			method: 'POST',
 			url: `${process.env.NEXT_PUBLIC_DATABASE_LINK}${id}.json`,
 			data: {
 				type,
 				data,
-				name
+				name,
+				initial
 			}
 		});
 		return res.data;
@@ -100,16 +83,20 @@ const SavedSlice = createSlice({
 
 const selectData = (state: RootState) => state.saved.data;
 
-const getAllMortgageSelector = createSelector([selectData], (selectData) =>
-	selectData.filter((el) => {
-		return el.type === 'mortgage';
-	})
+export const getAllMortgageSelector = createSelector(
+	[selectData],
+	(selectData) =>
+		selectData.filter((el) => {
+			return el.type === 'mortage';
+		})
 );
 
-const getAllВepositsSelector = createSelector([selectData], (selectData) =>
-	selectData.filter((el) => {
-		return el.type === 'deposit';
-	})
+export const getAllВepositsSelector = createSelector(
+	[selectData],
+	(selectData) =>
+		selectData.filter((el) => {
+			return el.type === 'deposit';
+		})
 );
 
 const { reducer, actions } = SavedSlice;

@@ -2,6 +2,7 @@ import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { Button } from 'antd';
 import { PaymentDataExcelExporterProps } from '@/interfaces/mortgage.interface';
+import { DownloadOutlined } from '@ant-design/icons';
 
 const PaymentDataExcelExporter: React.FC<PaymentDataExcelExporterProps> = ({
 	paymentData
@@ -44,6 +45,7 @@ const PaymentDataExcelExporter: React.FC<PaymentDataExcelExporterProps> = ({
 			type={'dashed'}
 			disabled={!(paymentData.length > 1)}
 			onClick={exportToExcel}
+			icon={<DownloadOutlined />}
 		>
 			Скачать данные об оплате в Excel
 		</Button>

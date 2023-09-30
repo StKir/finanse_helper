@@ -1,3 +1,5 @@
+import { MortgageData, MortgageInput } from './mortgage.interface';
+
 export interface ValuteAdapter {
 	LoadingStatus: 'idle' | 'loading' | 'error' | 'success';
 	entities: {};
@@ -40,3 +42,26 @@ export type IUserStorePayload = Omit<
 	IUserStore,
 	'authModalIsOpen' | 'authModalType'
 >;
+
+export interface ISavedSlice {
+	loadingStatus: 'idle' | 'error' | 'loading' | 'success';
+	data: ISavedData[];
+}
+
+export interface ISavedData {
+	type: string;
+	name: string;
+	data: MortgageData[] | any; //Потом добавить новые
+}
+
+export interface ISavedRespons {
+	['username']: ISavedData[];
+}
+
+export interface ISavedSet {
+	id: string | number;
+	type: string;
+	name: string;
+	data: MortgageData[] | any; //Потом добавить новые
+	initial: MortgageInput;
+}
