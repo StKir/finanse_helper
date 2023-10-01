@@ -5,7 +5,8 @@ import { PaymentDataExcelExporterProps } from '@/interfaces/mortgage.interface';
 import { DownloadOutlined } from '@ant-design/icons';
 
 const PaymentDataExcelExporter: React.FC<PaymentDataExcelExporterProps> = ({
-	paymentData
+	paymentData,
+	name = 'payment_data.xlsx'
 }) => {
 	const exportToExcel = () => {
 		const workbook = new ExcelJS.Workbook();
@@ -37,7 +38,7 @@ const PaymentDataExcelExporter: React.FC<PaymentDataExcelExporterProps> = ({
 			const blob = new Blob([buffer], {
 				type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 			});
-			saveAs(blob, 'payment_data.xlsx');
+			saveAs(blob, name);
 		});
 	};
 	return (

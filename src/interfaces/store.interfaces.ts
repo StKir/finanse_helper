@@ -51,6 +51,8 @@ export interface ISavedSlice {
 export interface ISavedData {
 	type: string;
 	name: string;
+	initial: MortgageInput;
+
 	data: MortgageData[] | any; //Потом добавить новые
 }
 

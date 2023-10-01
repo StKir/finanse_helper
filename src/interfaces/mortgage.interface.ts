@@ -1,5 +1,6 @@
 export interface PaymentDataExcelExporterProps {
 	paymentData: MortgageData[];
+	name?: string;
 }
 
 export interface MortgageInput {

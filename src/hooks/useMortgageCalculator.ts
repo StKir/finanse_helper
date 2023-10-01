@@ -15,7 +15,8 @@ function useMortgageCalculator() {
 		const monthlyPayment = isAnnuitant
 			? (remainingLoan * monthlyInterestRate) /
 			  (1 - Math.pow(1 + monthlyInterestRate, -mortgageInput.loanTermMonths))
-			: remainingLoan / mortgageInput.loanTermMonths;
+			: remainingLoan / mortgageInput.loanTermMonths +
+			  remainingLoan * monthlyInterestRate;
 
 		const newData: MortgageData[] = [];
 
@@ -23,7 +24,7 @@ function useMortgageCalculator() {
 			const interestPayment = remainingLoan * monthlyInterestRate;
 			const principalPayment = isAnnuitant
 				? monthlyPayment - interestPayment
-				: monthlyPayment;
+				: monthlyPayment - remainingLoan * monthlyInterestRate;
 
 			remainingLoan = remainingLoan - principalPayment;
 
