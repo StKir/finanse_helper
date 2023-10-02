@@ -7,7 +7,13 @@ const TableSection: FC<ITable> = ({ paymentData, columns }) => {
 		return { ...el, key: i + 1 };
 	});
 
-	return <Table dataSource={newData} columns={columns} />;
+	return (
+		<Table
+			scroll={{ x: 1000, y: 400 }}
+			dataSource={newData}
+			columns={columns}
+		/>
+	);
 };
 
 export default TableSection;

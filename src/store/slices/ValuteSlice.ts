@@ -33,17 +33,6 @@ export const getAllValut = createAsyncThunk<IValut>(
 	}
 );
 
-// export const getAllNews = createAsyncThunk<any>(
-// 	'valute/getAllNews',
-// 	async () => {
-// 		const res = await axios({
-// 			method: 'GET',
-// 			url: `https://newsapi.org/v2/top-headlines?country=ru&category=business&apiKey=${process.env.NEXT_PUBLIC_REACT_NEWS_KEY}`
-// 		});
-// 		return res.data;
-// 	}
-// );
-
 const valuteSlice = createSlice({
 	name: 'valute',
 	initialState,
@@ -67,9 +56,6 @@ const valuteSlice = createSlice({
 			.addCase(getAllValut.rejected, (state) => {
 				state.LoadingStatus = 'error';
 			});
-		// .addCase(getAllNews.fulfilled, (state, { payload }) => {
-		// 	console.log(payload);
-		// });
 	}
 });
 

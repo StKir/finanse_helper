@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import valuteSlice from './slices/ValuteSlice';
 import userSlice from './slices/UserSlice';
 import savedSlice from './slices/SavedSlice';
+import newsSlice from './slices/NewsSlice';
 
 const store = configureStore({
 	reducer: {
 		valute: valuteSlice,
 		user: userSlice,
-		saved: savedSlice
+		saved: savedSlice,
+		news: newsSlice
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({ serializableCheck: false }),

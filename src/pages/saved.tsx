@@ -3,10 +3,7 @@ import Loader from '@/components/ui/loader/Loader';
 import Error from '@/components/ui/error/Error';
 import Title from '@/components/ui/title/Title';
 import { useAuth } from '@/hooks/useAuth';
-import {
-	getAllВepositsSelector,
-	getSavedData
-} from '@/store/slices/SavedSlice';
+import { getSavedData } from '@/store/slices/SavedSlice';
 import { changeModalType, setModalStatus } from '@/store/slices/UserSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { Button, Result } from 'antd';

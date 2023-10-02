@@ -67,3 +67,41 @@ export interface ISavedSet {
 	data: MortgageData[] | any; //Потом добавить новые
 	initial: MortgageInput;
 }
+
+export interface NewsAdapter {
+	LoadingStatus: 'idle' | 'loading' | 'error' | 'success';
+	entities: {};
+	ids: [];
+}
+
+export interface INewsRespons {
+	status: string;
+	totalResults: number;
+	results: INews[];
+	nextPage: string;
+}
+
+export interface INews {
+	article_id: string;
+	title: string;
+	link: string;
+	keywords: null | string;
+	creator: null | string;
+	video_url: null | string;
+	description: string;
+	content: string;
+	pubDate: string;
+	image_url: null | string;
+	source_id: null | string;
+	source_priority: string;
+	country: string[];
+	category: string[];
+	language: string;
+}
+
+export type TNewsCategory = 'Business' | 'Technology' | 'Top';
+
+export interface INewsError {
+	status: string;
+	results: { message: string; code: string };
+}

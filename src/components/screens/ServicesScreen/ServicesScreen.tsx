@@ -3,15 +3,14 @@ import Title from '@/components/ui/title/Title';
 import styles from './ServicesScreen.module.scss';
 import 'swiper/css';
 import ValuteSection from '@/components/smart/mainValuteSection/ValuteSection';
+import NewsSection from '@/components/smart/newsSection/NewsSection';
 
 const ServicesScreen = () => {
 	return (
 		<>
 			<ValuteSection />
 			<NewServiceSection />
-			<div className='container'>
-				<Title desc='из мира финансов'>Новости</Title>
-			</div>
+			<NewsSection />
 		</>
 	);
 };
