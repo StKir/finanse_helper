@@ -2,7 +2,6 @@ import {
 	createSlice,
 	createAsyncThunk,
 	createEntityAdapter,
-	PayloadAction,
 	createSelector
 } from '@reduxjs/toolkit';
 import axios from 'axios';

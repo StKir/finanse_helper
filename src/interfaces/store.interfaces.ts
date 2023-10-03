@@ -72,6 +72,8 @@ export interface NewsAdapter {
 	LoadingStatus: 'idle' | 'loading' | 'error' | 'success';
 	entities: {};
 	ids: [];
+	errorMassage: string;
+	type: TNewsCategory;
 }
 
 export interface INewsRespons {
@@ -99,7 +101,7 @@ export interface INews {
 	language: string;
 }
 
-export type TNewsCategory = 'Business' | 'Technology' | 'Top';
+export type TNewsCategory = 'business' | 'technology' | 'top';
 
 export interface INewsError {
 	status: string;

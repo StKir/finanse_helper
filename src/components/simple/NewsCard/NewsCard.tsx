@@ -1,5 +1,5 @@
 import { INews } from '@/interfaces/store.interfaces';
-import { Card } from 'antd';
+import { Button, Card } from 'antd';
 import { FC } from 'react';
 import styles from './newsCard.module.scss';
 import Image from 'next/image';
@@ -20,15 +20,14 @@ const NewsCard: FC<NewsCardProps> = ({
 	return (
 		<Card title={title} bordered={true}>
 			<div className={styles.description}>
-				{image_url && (
-					<Image
-						alt='Picture of the author'
-						src={image_url}
-						width={100}
-						height={100}
-					/>
-				)}
-				{description.slice(0, 100)}
+				<p>
+					{description ? description.slice(0, 350) : content.slice(0, 350)}...
+				</p>
+				<div className={styles.info_grid}>
+					<Button href={link} type='link'>
+						Читать в источнике
+					</Button>
+				</div>
 			</div>
 		</Card>
 	);

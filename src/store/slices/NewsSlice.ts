@@ -1,7 +1,9 @@
 import {
 	createSlice,
 	createAsyncThunk,
-	createEntityAdapter
+	createEntityAdapter,
+	createSelector,
+	PayloadAction
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
@@ -18,8 +20,10 @@ const NewsAdater = createEntityAdapter<INews>();
 const initialState = {
 	entities: {},
 	ids: [],
-	LoadingStatus: 'idle'
-} as NewsAdapter;
+	LoadingStatus: 'idle',
+	type: 'top',
+	errorMassage: null
+} as unknown as NewsAdapter;
 
 export const getAllNews = createAsyncThunk<INewsRespons, TNewsCategory>(
 	'news/getAllNews',
@@ -35,23 +39,27 @@ export const getAllNews = createAsyncThunk<INewsRespons, TNewsCategory>(
 const newsSlice = createSlice({
 	name: 'news',
 	initialState,
-	reducers: {},
+	reducers: {
+		setType(state, { payload }: PayloadAction<TNewsCategory>) {
+			state.type = payload;
+		}
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(getAllNews.pending, (state) => {
 				state.LoadingStatus = 'loading';
 			})
-			.addCase(getAllNews.rejected, (state, { payload }) => {
-				console.log(payload);
-
+			.addCase(getAllNews.rejected, (state, { error }) => {
 				state.LoadingStatus = 'error';
+				state.errorMassage = error.code!;
 			})
 			.addCase(getAllNews.fulfilled, (state, { payload }) => {
 				const res: INews[] = payload.results?.map((el) => {
 					return { ...el, id: el.article_id };
 				});
-				NewsAdater.setAll(state, res);
+				NewsAdater.addMany(state, res);
 				state.LoadingStatus = 'success';
+				state.errorMassage = null!;
 			});
 	}
 });
@@ -61,5 +69,17 @@ const { reducer, actions } = newsSlice;
 export const { selectAll } = NewsAdater.getSelectors<RootState>(
 	(state) => state.news
 );
+
+export const getAllTypeNews = createSelector(
+	[selectAll, (state) => state.news.type],
+	(data, type: TNewsCategory) =>
+		data.filter((el) => {
+			console.log(el.category, type);
+
+			return el.category.includes(type);
+		})
+);
+
+export const { setType } = actions;
 
 export default reducer;

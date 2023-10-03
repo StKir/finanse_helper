@@ -1,22 +1,29 @@
 import Title from '@/components/ui/title/Title';
-import { TNewsCategory } from '@/interfaces/store.interfaces';
-import { getAllNews, selectAll } from '@/store/slices/NewsSlice';
+import {
+	getAllNews,
+	getAllTypeNews,
+	selectAll,
+	setType
+} from '@/store/slices/NewsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import styles from './newsSection.module.scss';
-import { useEffect, useState } from 'react';
-import Loader from '@/components/ui/loader/Loader';
+import { useEffect } from 'react';
 import Error from '@/components/ui/error/Error';
 import NewsCard from '@/components/simple/NewsCard/NewsCard';
 import { Button, Card } from 'antd';
 
 const NewsSection = () => {
-	const [type, SetType] = useState<TNewsCategory>('Business');
-	const allNews = useAppSelector(selectAll);
+	const type = useAppSelector((state) => state.news.type);
 	const newsLoadingStatus = useAppSelector((state) => state.news.LoadingStatus);
+	const allTypeNews = useAppSelector(getAllTypeNews);
+	const error = useAppSelector((state) => state.news.errorMassage);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(getAllNews(type));
+		if (!allTypeNews.length) dispatch(getAllNews(type));
+		console.log(allTypeNews);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, type]);
 
 	return (
@@ -24,25 +31,25 @@ const NewsSection = () => {
 			<Title desc='из мира финансов и бизнесса'>Новости</Title>
 			<div className={styles.category_btns}>
 				<Button
-					onClick={() => SetType('Business')}
-					type={type === 'Business' ? 'primary' : 'default'}
+					onClick={() => dispatch(setType('business'))}
+					type={type === 'business' ? 'primary' : 'default'}
 				>
 					Бизнесс
 				</Button>
 				<Button
-					onClick={() => SetType('Top')}
-					type={type === 'Top' ? 'primary' : 'default'}
+					onClick={() => dispatch(setType('top'))}
+					type={type === 'top' ? 'primary' : 'default'}
 				>
 					Главное
 				</Button>
 				<Button
-					onClick={() => SetType('Technology')}
-					type={type === 'Technology' ? 'primary' : 'default'}
+					onClick={() => dispatch(setType('technology'))}
+					type={type === 'technology' ? 'primary' : 'default'}
 				>
 					Технологии
 				</Button>
 			</div>
-			{newsLoadingStatus === 'error' && <Error />}
+			{newsLoadingStatus === 'error' && <Error massage={error} />}
 			<div className={styles.news_grid}>
 				{newsLoadingStatus === 'loading' &&
 					[1, 2, 3, 4, 5].map((el) => {
@@ -56,7 +63,7 @@ const NewsSection = () => {
 						);
 					})}
 				{newsLoadingStatus === 'success' &&
-					allNews.map((el) => {
+					allTypeNews.map((el) => {
 						return (
 							<NewsCard
 								key={el.article_id}
