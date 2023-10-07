@@ -7,6 +7,7 @@ import { getAllMortgageSelector } from '@/store/slices/SavedSlice';
 import { columns } from '../Table/constants';
 import styles from './mortgageItem.module.scss';
 import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/PaymentDataExcelExporter';
+import { moneyFormat } from '@/services/moneyFormat';
 
 const MortgageItem = () => {
 	const AllMortgage = useAppSelector(getAllMortgageSelector);
@@ -29,13 +30,13 @@ const MortgageItem = () => {
 										<span className={styles.initial_title}>
 											Стоимость недвижимости:
 										</span>
-										<span>{el.initial.propertyPrice}₽</span>
+										<span>{moneyFormat(el.initial.propertyPrice)}₽</span>
 									</div>
 									<div>
 										<span className={styles.initial_title}>
 											Первоначальный взнос:
 										</span>
-										<span>{el.initial.downPayment}₽</span>
+										<span>{moneyFormat(el.initial.downPayment)}₽</span>
 									</div>
 									<div>
 										<span className={styles.initial_title}>Срок кредита:</span>
@@ -66,7 +67,11 @@ const MortgageItem = () => {
 	return (
 		<section>
 			<TitleDescription>Расчеты ипотеки</TitleDescription>
-			<Collapse collapsible='header' items={itemsMortgage} />
+			{AllMortgage.length ? (
+				<Collapse collapsible='header' items={itemsMortgage} />
+			) : (
+				'Вы еще не сохраняли расчеты'
+			)}
 		</section>
 	);
 }; //Компонент Ипотеки

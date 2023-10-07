@@ -27,3 +27,26 @@ export const columns: TColums[] = [
 		key: 'Остаток долга'
 	}
 ];
+
+export const columnsDeposit: TColums[] = [
+	{
+		title: 'Дата',
+		dataIndex: 'Дата',
+		key: 'Дата'
+	},
+	{
+		title: 'Начислено процентов',
+		dataIndex: 'Начислено процентов',
+		key: 'Начислено процентов'
+	},
+	{
+		title: 'Изменение баланса',
+		dataIndex: 'Изменение баланса',
+		key: 'Изменение баланса'
+	},
+	{
+		title: 'Баланс',
+		dataIndex: 'Баланс',
+		key: 'Баланс'
+	}
+];

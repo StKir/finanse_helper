@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch } from 'react';
 import { MortgageData } from './mortgage.interface';
 import { IUserStorePayload, TAuthModalType } from './store.interfaces';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -10,13 +10,31 @@ export interface TColums {
 	key: string;
 }
 
+// Интерфейс для параметров вклада
+export interface InvestmentParams {
+	initialDepositAmount: number;
+	investmentTermMonths: number;
+	interestRate: number;
+	paymentFrequency: number;
+	compoundInterest: boolean;
+	startDate: string | any;
+}
+
+// Интерфейс для данных о доходности
+export interface InvestmentData {
+	Дата: string;
+	'Начислено процентов': string;
+	'Изменение баланса': string;
+	Баланс: string;
+}
+
 export interface IMessageProps {
 	type: NoticeType;
 	content: string;
 }
 
 export interface ITable {
-	paymentData: MortgageData[];
+	paymentData: MortgageData[] | InvestmentData[];
 	columns: TColums[];
 }
 

@@ -72,12 +72,7 @@ export const { selectAll } = NewsAdater.getSelectors<RootState>(
 
 export const getAllTypeNews = createSelector(
 	[selectAll, (state) => state.news.type],
-	(data, type: TNewsCategory) =>
-		data.filter((el) => {
-			console.log(el.category, type);
-
-			return el.category.includes(type);
-		})
+	(data, type: TNewsCategory) => data.filter((el) => el.category.includes(type))
 );
 
 export const { setType } = actions;

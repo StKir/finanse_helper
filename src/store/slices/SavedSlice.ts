@@ -65,9 +65,13 @@ const SavedSlice = createSlice({
 			state.loadingStatus = 'success';
 		});
 		builder.addCase(getSavedData.fulfilled, (state, { payload }) => {
-			state.data = Object.values(payload).map((el) => {
-				return el;
-			});
+			if (payload) {
+				state.data = Object.values(payload).map((el) => {
+					return el;
+				});
+			} else {
+				state.data = [];
+			}
 			state.loadingStatus = 'idle';
 		});
 		builder.addCase(getSavedData.pending, (state) => {

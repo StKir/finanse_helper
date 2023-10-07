@@ -71,8 +71,6 @@ const NewsSection = () => {
 								title={el.title}
 								description={el.description}
 								content={el.content}
-								source_id={el.source_id}
-								image_url={el.image_url}
 							/>
 						);
 					})}

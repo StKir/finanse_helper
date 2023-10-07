@@ -1,4 +1,5 @@
 import { MortgageData, MortgageInput } from '@/interfaces/mortgage.interface';
+import { moneyFormat } from '@/services/moneyFormat';
 import { useState } from 'react';
 
 function useMortgageCalculator() {
@@ -30,10 +31,11 @@ function useMortgageCalculator() {
 
 			newData.push({
 				Месяц: month,
-				'Сумма платежа': monthlyPayment.toFixed(2),
-				'Платеж по основному долгу': principalPayment.toFixed(2),
-				'Платеж по процентам': interestPayment.toFixed(2),
-				'Остаток долга': remainingLoan.toFixed(2)
+				'Сумма платежа': moneyFormat(monthlyPayment.toFixed(2)) + '₽',
+				'Платеж по основному долгу':
+					moneyFormat(principalPayment.toFixed(2)) + '₽',
+				'Платеж по процентам': moneyFormat(interestPayment.toFixed(2)) + '₽',
+				'Остаток долга': moneyFormat(remainingLoan.toFixed(2)) + '₽'
 			});
 		}
 		setMortgageData(newData);

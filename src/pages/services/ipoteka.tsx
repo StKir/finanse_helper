@@ -9,7 +9,7 @@ import { IMessageProps } from '@/interfaces/component.interface';
 import { MortgageInput } from '@/interfaces/mortgage.interface';
 import { resetLoadingStatus, setSavedData } from '@/store/slices/SavedSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { Button, Form, Input, Radio, message } from 'antd';
+import { Button, Form, Input, InputNumber, Radio, message } from 'antd';
 import { useEffect, useState } from 'react';
 
 const IpotekaService = () => {
@@ -125,21 +125,31 @@ const IpotekaService = () => {
 				<Form.Item
 					label='Стоимость недвижимости'
 					name='propertyPrice'
-					rules={[
-						{ required: true, message: 'Обязательно для заполнения' },
-						{ min: 6, message: 'Минимум 100.000' }
-					]}
+					rules={[{ required: true, message: 'Обязательно для заполнения' }]}
 				>
-					<Input type='number' placeholder='Введите стоимость недвижимости' />
+					<InputNumber
+						style={{ width: '100%' }}
+						placeholder='Введите стоимость недвижимости'
+						formatter={(value) =>
+							`${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+						}
+						parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+					/>
 				</Form.Item>
 				<Form.Item
 					label='Первоначальный взнос'
 					name='downPayment'
 					rules={[{ required: true, message: 'Обязательно для заполнения' }]}
 				>
-					<Input placeholder={'Первоначальный взнос'} />
+					<InputNumber
+						style={{ width: '100%' }}
+						placeholder='Первоначальный взнос'
+						formatter={(value) =>
+							`${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+						}
+						parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+					/>
 				</Form.Item>
-
 				<Form.Item
 					label='Срок кредита в месяцах'
 					name='loanTermMonths'
