@@ -8,6 +8,7 @@ import { columns } from '../Table/constants';
 import styles from './mortgageItem.module.scss';
 import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/PaymentDataExcelExporter';
 import { moneyFormat } from '@/services/moneyFormat';
+import Error from '@/components/ui/error/Error';
 
 const MortgageItem = () => {
 	const AllMortgage = useAppSelector(getAllMortgageSelector);
@@ -16,47 +17,60 @@ const MortgageItem = () => {
 		if (array) {
 			return array
 				.map((el, i) => {
-					return {
-						key: i,
-						label: el.name,
-						children: (
-							<div>
-								<div className={styles.initial_data}>
-									<div>
-										<span className={styles.initial_title}>Тип платежей:</span>
-										<span>{el.initial.paymentType}</span>
+					if (el.type === 'mortage') {
+						//Это что-то типа проверки на тип если type === 'mortage' значит приходит объект расчета ипотеки
+						return {
+							key: i,
+							label: el.name,
+							children: (
+								<div>
+									<div className={styles.initial_data}>
+										<div>
+											<span className={styles.initial_title}>
+												Тип платежей:
+											</span>
+											<span>{el.initial.paymentType}</span>
+										</div>
+										<div>
+											<span className={styles.initial_title}>
+												Стоимость недвижимости:
+											</span>
+											<span>{moneyFormat(el.initial.propertyPrice)}₽</span>
+										</div>
+										<div>
+											<span className={styles.initial_title}>
+												Первоначальный взнос:
+											</span>
+											<span>{moneyFormat(el.initial.downPayment)}₽</span>
+										</div>
+										<div>
+											<span className={styles.initial_title}>
+												Срок кредита:
+											</span>
+											<span>{el.initial.loanTermMonths} месяцев</span>
+										</div>
+										<div>
+											<span className={styles.initial_title}>
+												Процентная ставка:
+											</span>
+											<span>{el.initial.interestRate}%</span>
+										</div>
+										<PaymentDataExcelExporter
+											name={el.name}
+											paymentData={el.data}
+										/>
 									</div>
-									<div>
-										<span className={styles.initial_title}>
-											Стоимость недвижимости:
-										</span>
-										<span>{moneyFormat(el.initial.propertyPrice)}₽</span>
-									</div>
-									<div>
-										<span className={styles.initial_title}>
-											Первоначальный взнос:
-										</span>
-										<span>{moneyFormat(el.initial.downPayment)}₽</span>
-									</div>
-									<div>
-										<span className={styles.initial_title}>Срок кредита:</span>
-										<span>{el.initial.loanTermMonths} месяцев</span>
-									</div>
-									<div>
-										<span className={styles.initial_title}>
-											Процентная ставка:
-										</span>
-										<span>{el.initial.interestRate}%</span>
-									</div>
-									<PaymentDataExcelExporter
-										name={el.name}
-										paymentData={el.data}
-									/>
+									<TableSection paymentData={el.data} columns={columns} />
 								</div>
-								<TableSection paymentData={el.data} columns={columns} />
-							</div>
-						)
-					};
+							)
+						};
+					} else {
+						return {
+							key: i,
+							label: 'Error',
+							children: <Error />
+						};
+					}
 				})
 				.reverse();
 		}

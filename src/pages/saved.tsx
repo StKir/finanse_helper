@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import { Button, Result } from 'antd';
 import { useEffect } from 'react';
 import MortgageItem from '@/components/simple/MortgageItem/MortgageItem';
+import DepositItem from '@/components/simple/DepositItem/DepositItem';
 
 const Saved = () => {
 	const { isAuth } = useAuth();
@@ -35,6 +36,7 @@ const SavedPage = () => {
 		<>
 			<Title>Сохраненные расчеты</Title>
 			<MortgageItem />
+			<DepositItem />
 			{/* <section>
 				<TitleDescription>Расчеты вкладов</TitleDescription>
 				<Collapse collapsible='header' items={itemsDeposit} />

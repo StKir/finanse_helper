@@ -1,3 +1,4 @@
+import { InvestmentData, InvestmentParams } from './deposit.inteface';
 import { MortgageData, MortgageInput } from './mortgage.interface';
 
 export interface ValuteAdapter {
@@ -48,12 +49,19 @@ export interface ISavedSlice {
 	data: ISavedData[];
 }
 
-export interface ISavedData {
-	type: string;
+export type ISavedData = ISavedData1 | ISavedData2;
+
+export interface ISavedData1 {
+	type: 'mortage';
 	name: string;
 	initial: MortgageInput;
-
-	data: MortgageData[] | any; //Потом добавить новые
+	data: MortgageData[];
+}
+export interface ISavedData2 {
+	type: 'deposit';
+	name: string;
+	initial: InvestmentParams;
+	data: InvestmentData[];
 }
 
 export interface ISavedRespons {
@@ -64,8 +72,8 @@ export interface ISavedSet {
 	id: string | number;
 	type: string;
 	name: string;
-	data: MortgageData[] | any; //Потом добавить новые
-	initial: MortgageInput;
+	data: MortgageData[] | InvestmentData[]; //Потом добавить новые
+	initial: MortgageInput | InvestmentParams;
 }
 
 export interface NewsAdapter {

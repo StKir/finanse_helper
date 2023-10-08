@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 const useInvestmentCalculator = () => {
 	const [investmentData, setInvestmentData] = useState<InvestmentData[]>([]);
+	const [investmentInput, setinvestmentInput] = useState<InvestmentParams>();
 
 	// const getEffectiverate = (
 	// 	rete: number,
@@ -21,6 +22,7 @@ const useInvestmentCalculator = () => {
 	// };
 
 	const calculateInvestment = (investmentInput: InvestmentParams) => {
+		setinvestmentInput(investmentInput);
 		const data: InvestmentData[] = [];
 		let depositAmount = investmentInput.initialDepositAmount;
 		let currentDate = new Date(investmentInput.startDate);
@@ -64,7 +66,11 @@ const useInvestmentCalculator = () => {
 		setInvestmentData(data);
 	};
 
-	return { investmentData, calculateInvestment, setInvestmentData };
+	return {
+		investmentData,
+		calculateInvestment,
+		investmentInput
+	};
 };
 
 export default useInvestmentCalculator;

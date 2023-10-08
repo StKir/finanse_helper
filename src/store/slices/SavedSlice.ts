@@ -16,7 +16,7 @@ const initialState = {
 	data: []
 } as unknown as ISavedSlice;
 
-export const setSavedData = createAsyncThunk<any, ISavedSet>(
+export const setSavedData = createAsyncThunk<unknown, ISavedSet>(
 	'saved/setSavedData',
 	async ({ id, data, type, name, initial }) => {
 		const res = await axios({

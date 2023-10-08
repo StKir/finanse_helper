@@ -171,7 +171,10 @@ const IpotekaService = () => {
 					<Button type='dashed' onClick={onResetCalculator}>
 						Новый расчет
 					</Button>
-					<PaymentDataExcelExporter paymentData={mortgageData} />
+					<PaymentDataExcelExporter
+						// name={mortageName}
+						paymentData={mortgageData}
+					/>
 				</div>
 			</Form>
 			<div

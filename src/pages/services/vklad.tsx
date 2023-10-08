@@ -4,15 +4,28 @@ import { columnsDeposit } from '@/components/simple/Table/constants';
 import DepositExcelDownload from '@/components/smart/depositExcelDownload/DepositExcelDownload';
 import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/PaymentDataExcelExporter';
 import Title from '@/components/ui/title/Title';
+import { useAuth } from '@/hooks/useAuth';
 import useInvestmentCalculator from '@/hooks/useInvestmentCalculator';
 import { InvestmentParams } from '@/interfaces/deposit.inteface';
-import { Button, Checkbox, DatePicker, Form, InputNumber, Select } from 'antd';
+import { setSavedData } from '@/store/slices/SavedSlice';
+import { useAppDispatch } from '@/store/store';
+import {
+	Button,
+	Checkbox,
+	DatePicker,
+	Form,
+	Input,
+	InputNumber,
+	Select
+} from 'antd';
 import React, { FC, useState } from 'react';
 
 const Vklad: FC = () => {
 	const [formDeposit] = Form.useForm();
-	const [name, setName] = useState<string>('');
-	const { investmentData, calculateInvestment, setInvestmentData } =
+	const [depositName, setDepositName] = useState<string>('');
+	const { isAuth, id } = useAuth();
+	const dispathc = useAppDispatch();
+	const { investmentData, calculateInvestment, investmentInput } =
 		useInvestmentCalculator();
 
 	const onSubmitForm = (value: InvestmentParams) => {
@@ -25,11 +38,30 @@ const Vklad: FC = () => {
 
 	const onResetCalculator = () => {
 		formDeposit.resetFields();
-		setName('');
-		setInvestmentData([]);
+		setDepositName('');
+		calculateInvestment({
+			initialDepositAmount: 0,
+			investmentTermMonths: 0,
+			interestRate: 0,
+			paymentFrequency: 0,
+			compoundInterest: false,
+			startDate: 0
+		});
 	};
 
 	const dateFormat = 'YYYY/MM/DD';
+
+	const onSave = () => {
+		dispathc(
+			setSavedData({
+				id,
+				type: 'deposit',
+				data: investmentData,
+				name: depositName,
+				initial: investmentInput!
+			})
+		);
+	};
 
 	return (
 		<ServicesLayout>
@@ -101,6 +133,26 @@ const Vklad: FC = () => {
 					<DepositExcelDownload paymentData={investmentData} />
 				</div>
 			</Form>
+			<div
+				style={{
+					display: 'flex',
+					marginTop: 20
+				}}
+			>
+				<Button
+					disabled={!(isAuth && !!investmentData.length && !!depositName)}
+					type='primary'
+					onClick={onSave}
+				>
+					Сохранить расчет
+				</Button>
+				<Input
+					type='string'
+					value={depositName}
+					onChange={(e) => setDepositName(e.target.value)}
+					placeholder='Введите название вклада'
+				/>
+			</div>
 			<TableSection paymentData={investmentData} columns={columnsDeposit} />
 		</ServicesLayout>
 	);
