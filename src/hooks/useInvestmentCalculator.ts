@@ -1,7 +1,7 @@
 import {
 	InvestmentData,
 	InvestmentParams
-} from '@/interfaces/component.interface';
+} from '@/interfaces/deposit.inteface';
 import { moneyFormat } from '@/services/moneyFormat';
 import { useState } from 'react';
 
@@ -64,7 +64,7 @@ const useInvestmentCalculator = () => {
 		setInvestmentData(data);
 	};
 
-	return { investmentData, calculateInvestment };
+	return { investmentData, calculateInvestment, setInvestmentData };
 };
 
 export default useInvestmentCalculator;

@@ -1,28 +1,20 @@
 import Title from '@/components/ui/title/Title';
-import {
-	getAllNews,
-	getAllTypeNews,
-	selectAll,
-	setType
-} from '@/store/slices/NewsSlice';
+import { getAllNews, getAllTypeNews, setType } from '@/store/slices/NewsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import styles from './newsSection.module.scss';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import Error from '@/components/ui/error/Error';
 import NewsCard from '@/components/simple/NewsCard/NewsCard';
 import { Button, Card } from 'antd';
+import { INews } from '@/interfaces/store.interfaces';
 
 const NewsSection = () => {
 	const type = useAppSelector((state) => state.news.type);
-	const newsLoadingStatus = useAppSelector((state) => state.news.LoadingStatus);
 	const allTypeNews = useAppSelector(getAllTypeNews);
-	const error = useAppSelector((state) => state.news.errorMassage);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		if (!allTypeNews.length) dispatch(getAllNews(type));
-		console.log(allTypeNews);
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, type]);
 
@@ -49,6 +41,20 @@ const NewsSection = () => {
 					Технологии
 				</Button>
 			</div>
+			<NewsArray allTypeNews={allTypeNews} />
+		</div>
+	);
+};
+
+type TNewsProps = {
+	allTypeNews: INews[];
+};
+
+const NewsArray: FC<TNewsProps> = ({ allTypeNews }) => {
+	const error = useAppSelector((state) => state.news.errorMassage);
+	const newsLoadingStatus = useAppSelector((state) => state.news.LoadingStatus);
+	return (
+		<>
 			{newsLoadingStatus === 'error' && <Error massage={error} />}
 			<div className={styles.news_grid}>
 				{newsLoadingStatus === 'loading' &&
@@ -75,7 +81,7 @@ const NewsSection = () => {
 						);
 					})}
 			</div>
-		</div>
+		</>
 	);
 };
 

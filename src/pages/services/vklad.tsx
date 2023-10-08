@@ -1,15 +1,19 @@
 import ServicesLayout from '@/components/layouts/ServicesLayout';
 import TableSection from '@/components/simple/Table/Table';
 import { columnsDeposit } from '@/components/simple/Table/constants';
+import DepositExcelDownload from '@/components/smart/depositExcelDownload/DepositExcelDownload';
+import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/PaymentDataExcelExporter';
 import Title from '@/components/ui/title/Title';
 import useInvestmentCalculator from '@/hooks/useInvestmentCalculator';
-import { InvestmentParams } from '@/interfaces/component.interface';
+import { InvestmentParams } from '@/interfaces/deposit.inteface';
 import { Button, Checkbox, DatePicker, Form, InputNumber, Select } from 'antd';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 const Vklad: FC = () => {
 	const [formDeposit] = Form.useForm();
-	const { investmentData, calculateInvestment } = useInvestmentCalculator();
+	const [name, setName] = useState<string>('');
+	const { investmentData, calculateInvestment, setInvestmentData } =
+		useInvestmentCalculator();
 
 	const onSubmitForm = (value: InvestmentParams) => {
 		const formattedDate = value.startDate.format('YYYY-MM-DD');
@@ -18,6 +22,13 @@ const Vklad: FC = () => {
 			startDate: formattedDate
 		});
 	};
+
+	const onResetCalculator = () => {
+		formDeposit.resetFields();
+		setName('');
+		setInvestmentData([]);
+	};
+
 	const dateFormat = 'YYYY/MM/DD';
 
 	return (
@@ -72,7 +83,6 @@ const Vklad: FC = () => {
 					rules={[{ required: true, message: 'Обязательно для заполнения' }]}
 				>
 					<Select
-						defaultValue={1}
 						options={[
 							{ value: 1, label: 'Раз в месяц' },
 							{ value: 3, label: 'Раз в квартал' },
@@ -81,9 +91,15 @@ const Vklad: FC = () => {
 						]}
 					/>
 				</Form.Item>
-				<Button htmlType='submit' type='primary'>
-					Расчитать
-				</Button>
+				<div className='btn_group'>
+					<Button htmlType='submit' type='primary'>
+						Расчитать
+					</Button>
+					<Button type='dashed' onClick={onResetCalculator}>
+						Новый расчет
+					</Button>
+					<DepositExcelDownload paymentData={investmentData} />
+				</div>
 			</Form>
 			<TableSection paymentData={investmentData} columns={columnsDeposit} />
 		</ServicesLayout>

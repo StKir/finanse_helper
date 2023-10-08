@@ -3,29 +3,22 @@ import { MortgageData } from './mortgage.interface';
 import { IUserStorePayload, TAuthModalType } from './store.interfaces';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { NoticeType } from 'antd/es/message/interface';
+import { InvestmentData } from './deposit.inteface';
+
+export interface PaymentDataExcelExporterProps {
+	paymentData: MortgageData[];
+	name?: string;
+}
+
+export interface DepostDataExcekExporterProps {
+	paymentData: InvestmentData[];
+	name?: string;
+}
 
 export interface TColums {
 	title: string;
 	dataIndex: string;
 	key: string;
-}
-
-// Интерфейс для параметров вклада
-export interface InvestmentParams {
-	initialDepositAmount: number;
-	investmentTermMonths: number;
-	interestRate: number;
-	paymentFrequency: number;
-	compoundInterest: boolean;
-	startDate: string | any;
-}
-
-// Интерфейс для данных о доходности
-export interface InvestmentData {
-	Дата: string;
-	'Начислено процентов': string;
-	'Изменение баланса': string;
-	Баланс: string;
 }
 
 export interface IMessageProps {

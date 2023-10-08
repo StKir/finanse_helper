@@ -1,8 +1,8 @@
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { Button } from 'antd';
-import { PaymentDataExcelExporterProps } from '@/interfaces/mortgage.interface';
 import { DownloadOutlined } from '@ant-design/icons';
+import { PaymentDataExcelExporterProps } from '@/interfaces/component.interface';
 
 const PaymentDataExcelExporter: React.FC<PaymentDataExcelExporterProps> = ({
 	paymentData,
@@ -11,7 +11,6 @@ const PaymentDataExcelExporter: React.FC<PaymentDataExcelExporterProps> = ({
 	const exportToExcel = () => {
 		const workbook = new ExcelJS.Workbook();
 		const worksheet = workbook.addWorksheet('Payment Data');
-
 		worksheet.columns = [
 			{ header: 'Месяц', key: 'month', width: 10 },
 			{ header: 'Сумма платежа', key: 'paymentAmount', width: 20 },
