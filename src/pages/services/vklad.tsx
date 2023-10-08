@@ -2,7 +2,6 @@ import ServicesLayout from '@/components/layouts/ServicesLayout';
 import TableSection from '@/components/simple/Table/Table';
 import { columnsDeposit } from '@/components/simple/Table/constants';
 import DepositExcelDownload from '@/components/smart/depositExcelDownload/DepositExcelDownload';
-import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/PaymentDataExcelExporter';
 import Title from '@/components/ui/title/Title';
 import { useAuth } from '@/hooks/useAuth';
 import useInvestmentCalculator from '@/hooks/useInvestmentCalculator';
