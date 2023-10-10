@@ -10,6 +10,12 @@ export interface PaymentDataExcelExporterProps {
 	name?: string;
 }
 
+export interface INewService {
+	title: string;
+	description: string;
+	link: string;
+}
+
 export interface DepostDataExcekExporterProps {
 	paymentData: InvestmentData[];
 	name?: string;
