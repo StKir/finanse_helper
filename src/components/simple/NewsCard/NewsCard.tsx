@@ -2,7 +2,6 @@ import { INews } from '@/interfaces/store.interfaces';
 import { Button, Card } from 'antd';
 import { FC } from 'react';
 import styles from './newsCard.module.scss';
-import Image from 'next/image';
 
 type NewsCardProps = Pick<INews, 'title' | 'link' | 'description' | 'content'>;
 

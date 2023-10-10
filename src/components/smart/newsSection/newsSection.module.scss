@@ -1,9 +1,11 @@
 .news_grid {
 	display: grid;
 	gap: 20px;
+	grid-template-columns: 100%;
 }
 .category_btns {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	gap: 10px;
 	margin-bottom: 20px;
