@@ -1,12 +1,7 @@
 import styles from './newService.module.scss';
 import { FC } from 'react';
 import Link from 'next/link';
-
-interface INewService {
-	title: string;
-	description: string;
-	link: string;
-}
+import { INewService } from '@/interfaces/component.interface';
 
 const NewService: FC<INewService> = ({ title, description, link }) => {
 	return (

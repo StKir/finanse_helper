@@ -6,7 +6,7 @@ type NewsCardProps = Pick<INews, 'title' | 'link' | 'description' | 'content'>;
 
 const NewsCard: FC<NewsCardProps> = ({ title, link, description, content }) => {
 	return (
-		<Card title={title} bordered={true}>
+		<Card title={title} bordered={true} style={{ whiteSpace: 'normal' }}>
 			<div>
 				<p>
 					{description
