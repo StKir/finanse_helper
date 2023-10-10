@@ -21,12 +21,6 @@ export const AuthorizationForm: FC<IPropsDispathc> = ({ dispathc }) => {
 					localStorage.setItem('user', JSON.stringify(value));
 				}
 				const user = userCredential.user;
-				console.log(userCredential.user);
-
-				// const token = await user.getIdTokenResult();
-				// console.log(token);
-				// const token = getAuth().createCustomToken(uid);
-
 				dispathc(
 					setUser({
 						email: user.email || value.email,
@@ -40,7 +34,6 @@ export const AuthorizationForm: FC<IPropsDispathc> = ({ dispathc }) => {
 			})
 			.catch((error) => {
 				console.log(error);
-
 				const errorCode = error.code;
 				const errorMessage = error.message;
 			});

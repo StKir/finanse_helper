@@ -46,6 +46,7 @@ const AuthorizationForm: FC<IPropsDispathc> = ({ dispathc }) => {
 					setUser({
 						email: user.email || value.email,
 						token: token.token,
+						username: user.displayName || 'user',
 						id: user.uid,
 						authLoadingStatus: 'success'
 					})
