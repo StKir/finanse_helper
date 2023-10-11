@@ -6,7 +6,7 @@ import '@/firebase';
 export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<MainLayout>
-			<Component {...pageProps} />;
+			<Component {...pageProps} />
 		</MainLayout>
 	);
 }

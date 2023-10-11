@@ -1,3 +1,5 @@
+import MainScreen from '@/components/screens/MainScreen/MainScreen';
+
 export default function Home() {
-	return <h2>Главный экран</h2>;
+	return <MainScreen />;
 }
