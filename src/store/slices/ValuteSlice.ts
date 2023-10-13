@@ -49,7 +49,7 @@ const valuteSlice = createSlice({
 						...el,
 						id: el.ID
 					};
-				}); //с api приходит ответ с ключом ID, а для адаптера нужен id (в lowerCases) поэтому деламе новый объект с слчем id
+				}); //с api приходит ответ с ключом ID, а для адаптера нужен id (в lowerCases) поэтому деламе новый объект с ключем id
 				ValuteAdater.setAll(state, truePaypoad);
 			})
 			.addCase(getAllValut.rejected, (state) => {

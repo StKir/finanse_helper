@@ -80,6 +80,7 @@ const NewsArray: FC<TNewsProps> = ({ allTypeNews }) => {
 							/>
 						);
 					})}
+				{!allTypeNews.length && <h3>Новостей нет</h3>}
 			</div>
 		</>
 	);
