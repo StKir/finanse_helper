@@ -5,11 +5,10 @@ import { FC, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Title from '@/components/ui/title/Title';
 import ValuteCard from '@/components/simple/ValuteCard/ValuteCard';
-import { Form, InputNumber, Popover, Select } from 'antd';
+import { Popover } from 'antd';
 import { Input } from 'antd';
 import Loader from '@/components/ui/loader/Loader';
 import Error from '@/components/ui/error/Error';
-import { TValuteRes } from '@/interfaces/store.interfaces';
 
 const ValuteSection: FC = () => {
 	return (
@@ -20,7 +19,6 @@ const ValuteSection: FC = () => {
 				</Title>
 			</div>
 			<ValuteSlider />
-			{/* <ValuteExchanger /> */}
 		</section>
 	);
 };
@@ -91,68 +89,5 @@ const ValuteSlider = () => {
 		</Swiper>
 	);
 };
-
-// type TValuteInfo = {
-// 	name: string;
-// 	value: number;
-// };
-
-// const initialObj = {
-// 	name: 'Выберете валюту',
-// 	value: 0
-// };
-
-// const ValuteExchanger = () => {
-// 	const valutes = useAppSelector(sortByValue);
-// 	const loading = useAppSelector((state) => state.valute.LoadingStatus);
-
-// 	const handleChange = (arg: number | TValuteRes) => {
-// 		// if (typeof arg === 'number') {
-// 		// 	SetValuteOne({
-// 		// 		valut: valuteOne?.valut
-// 		// 	});
-// 		// }
-// 	};
-
-// 	const getValute = () => {
-// 		const valuts = valutes.map((el) => ({
-// 			value: el.Value / el.Nominal,
-// 			label: el.Name
-// 		}));
-// 		return [{ value: 1, label: 'Российский рубль' }, ...valuts];
-// 	};
-// 	const valueSelect = getValute();
-
-// 	return (
-// 		<div className={styles.exchanger_wrp}>
-// 			<Form >
-// 				<div className={styles.exhanger_from}>
-// 					<Select
-// 						defaultValue={5}
-// 						onChange={handleChange}
-// 						options={valueSelect}
-// 					/>
-// 					<InputNumber
-// 						formatter={(value) =>
-// 							`${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-// 						}
-// 					/>
-// 				</div>
-// 				<div className={styles.exhanger_from}>
-// 					<Select
-// 						defaultValue={1}
-// 						onChange={handleChange}
-// 						options={valueSelect}
-// 					/>
-// 					<InputNumber
-// 						formatter={(value) =>
-// 							`${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-// 						}
-// 					/>
-// 				</div>
-// 			</Form>
-// 		</div>
-// 	);
-// };
 
 export default ValuteSection;

@@ -1,0 +1,11 @@
+.form_item {
+	display: grid;
+	gap: 0;
+	* {
+		height: auto;
+	}
+	.number_input {
+		width: 100%;
+		font-size: 32px;
+	}
+}
