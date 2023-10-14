@@ -24,7 +24,8 @@
 
 ![Стек](https://i.postimg.cc/XYwjF16x/asd.png)
 
-Использованные API
+### Использованные API
+
 Новости: https://newsdata.io
 Валюты: https://www.cbr-xml-daily.ru
 Аутенфикация и база данных: https://firebase.google.com/index.html
