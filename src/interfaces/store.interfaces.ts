@@ -72,7 +72,7 @@ export interface ISavedSet {
 	id: string | number;
 	type: string;
 	name: string;
-	data: MortgageData[] | InvestmentData[]; //Потом добавить новые
+	data?: MortgageData[] | InvestmentData[]; //Потом добавить новые
 	initial: MortgageInput | InvestmentParams;
 }
 

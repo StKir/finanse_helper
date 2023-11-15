@@ -1,0 +1,18 @@
+.overprivce_wrp {
+	padding: 5px;
+
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	.overpayment {
+		border-radius: 50px;
+		padding: 5px 10px;
+		font-weight: 500;
+		font-size: 20px;
+	}
+	span {
+		font-weight: 400;
+		font-size: 16px;
+	}
+}

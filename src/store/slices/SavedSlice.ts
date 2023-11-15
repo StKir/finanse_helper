@@ -60,8 +60,6 @@ const SavedSlice = createSlice({
 			state.loadingStatus = 'error';
 		});
 		builder.addCase(setSavedData.fulfilled, (state, { payload }) => {
-			console.log(payload);
-
 			state.loadingStatus = 'success';
 		});
 		builder.addCase(getSavedData.fulfilled, (state, { payload }) => {

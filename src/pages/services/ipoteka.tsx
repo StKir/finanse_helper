@@ -2,11 +2,12 @@ import ServicesLayout from '@/components/layouts/ServicesLayout';
 import TableSection from '@/components/simple/Table/Table';
 import { columns } from '@/components/simple/Table/constants';
 import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/PaymentDataExcelExporter';
+import OverPriceTable from '@/components/smart/overpriceTable/OverPriceTable';
 import Title from '@/components/ui/title/Title';
 import { useAuth } from '@/hooks/useAuth';
 import useMortgageCalculator from '@/hooks/useMortgageCalculator';
 import { IMessageProps } from '@/interfaces/component.interface';
-import { MortgageInput } from '@/interfaces/mortgage.interface';
+import { MortgageData, MortgageInput } from '@/interfaces/mortgage.interface';
 import { resetLoadingStatus, setSavedData } from '@/store/slices/SavedSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { Button, Form, Input, InputNumber, Radio, message } from 'antd';
@@ -22,7 +23,7 @@ const IpotekaService = () => {
 		(state) => state.saved.loadingStatus
 	);
 
-	const { mortgageData, calculateMortgage, mortgageInput } =
+	const { mortgageData, calculateMortgage, mortgageInput, overpayment } =
 		useMortgageCalculator();
 
 	const messageForStatusSave = ({ type, content }: IMessageProps) => {
@@ -82,7 +83,6 @@ const IpotekaService = () => {
 			setSavedData({
 				id,
 				type: 'mortage',
-				data: mortgageData,
 				name: mortageName,
 				initial: mortgageInput!
 			})
@@ -171,10 +171,7 @@ const IpotekaService = () => {
 					<Button type='dashed' onClick={onResetCalculator}>
 						Новый расчет
 					</Button>
-					<PaymentDataExcelExporter
-						// name={mortageName}
-						paymentData={mortgageData}
-					/>
+					<PaymentDataExcelExporter paymentData={mortgageData} />
 				</div>
 			</Form>
 			<div
@@ -198,6 +195,14 @@ const IpotekaService = () => {
 				/>
 			</div>
 			<TableSection paymentData={mortgageData} columns={columns} />
+			<OverPriceTable
+				initialValue={
+					mortgageInput
+						? mortgageInput.propertyPrice - mortgageInput.downPayment
+						: 0
+				}
+				overprice={overpayment}
+			/>
 		</ServicesLayout>
 	);
 };

@@ -1,14 +1,10 @@
 import TitleDescription from '@/components/ui/TitleDescription/TitleDescription';
 import { Collapse } from 'antd';
-import TableSection from '../Table/Table';
 import { useAppSelector } from '@/store/store';
 import { ISavedData } from '@/interfaces/store.interfaces';
 import { getAllMortgageSelector } from '@/store/slices/SavedSlice';
-import { columns } from '../Table/constants';
-import styles from './mortgageItem.module.scss';
-import PaymentDataExcelExporter from '@/components/smart/mortgageExcelDownload/PaymentDataExcelExporter';
-import { moneyFormat } from '@/services/moneyFormat';
 import Error from '@/components/ui/error/Error';
+import MortageChidrenItem from './mortageChildrenItem/MortageChidrenItem';
 
 const MortgageItem = () => {
 	const AllMortgage = useAppSelector(getAllMortgageSelector);
@@ -23,45 +19,11 @@ const MortgageItem = () => {
 							key: i,
 							label: el.name,
 							children: (
-								<div>
-									<div className={styles.initial_data}>
-										<div>
-											<span className={styles.initial_title}>
-												Тип платежей:
-											</span>
-											<span>{el.initial.paymentType}</span>
-										</div>
-										<div>
-											<span className={styles.initial_title}>
-												Стоимость недвижимости:
-											</span>
-											<span>{moneyFormat(el.initial.propertyPrice)}₽</span>
-										</div>
-										<div>
-											<span className={styles.initial_title}>
-												Первоначальный взнос:
-											</span>
-											<span>{moneyFormat(el.initial.downPayment)}₽</span>
-										</div>
-										<div>
-											<span className={styles.initial_title}>
-												Срок кредита:
-											</span>
-											<span>{el.initial.loanTermMonths} месяцев</span>
-										</div>
-										<div>
-											<span className={styles.initial_title}>
-												Процентная ставка:
-											</span>
-											<span>{el.initial.interestRate}%</span>
-										</div>
-										<PaymentDataExcelExporter
-											name={el.name}
-											paymentData={el.data}
-										/>
-									</div>
-									<TableSection paymentData={el.data} columns={columns} />
-								</div>
+								<MortageChidrenItem
+									type={'mortage'}
+									name={el.name}
+									initial={el.initial}
+								/>
 							)
 						};
 					} else {

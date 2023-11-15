@@ -5,11 +5,12 @@ import { useState } from 'react';
 function useMortgageCalculator() {
 	const [mortgageData, setMortgageData] = useState<MortgageData[]>([]);
 	const [mortgageInput, setMortgageInput] = useState<MortgageInput>();
+	const [overpayment, setOverpayment] = useState<number>(0);
 
 	const calculateMortgage = (mortgageInput: MortgageInput) => {
 		setMortgageInput(mortgageInput);
 		let remainingLoan = mortgageInput.propertyPrice - mortgageInput.downPayment;
-
+		setOverpayment(remainingLoan);
 		const monthlyInterestRate = mortgageInput.interestRate / 100 / 12;
 		const isAnnuitant = mortgageInput.paymentType === 'Аннуитетные';
 
@@ -28,7 +29,7 @@ function useMortgageCalculator() {
 				: monthlyPayment - remainingLoan * monthlyInterestRate;
 
 			remainingLoan = remainingLoan - principalPayment;
-
+			setOverpayment((num) => num - monthlyPayment);
 			newData.push({
 				Месяц: month,
 				'Сумма платежа': moneyFormat(monthlyPayment.toFixed(2)) + '₽',
@@ -44,7 +45,8 @@ function useMortgageCalculator() {
 	return {
 		mortgageData,
 		calculateMortgage,
-		mortgageInput
+		mortgageInput,
+		overpayment
 	};
 }
 
