@@ -55,13 +55,13 @@ export interface ISavedData1 {
 	type: 'mortage';
 	name: string;
 	initial: MortgageInput;
-	data: MortgageData[];
+	data?: MortgageData[];
 }
 export interface ISavedData2 {
 	type: 'deposit';
 	name: string;
 	initial: InvestmentParams;
-	data: InvestmentData[];
+	data?: InvestmentData[];
 }
 
 export interface ISavedRespons {

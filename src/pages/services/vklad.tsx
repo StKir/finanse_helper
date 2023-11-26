@@ -1,6 +1,7 @@
 import ServicesLayout from '@/components/layouts/ServicesLayout';
 import TableSection from '@/components/simple/Table/Table';
 import { columnsDeposit } from '@/components/simple/Table/constants';
+import DepositProfitInfo from '@/components/simple/depositProfitInfo/DepostProfitInfo';
 import DepositExcelDownload from '@/components/smart/depositExcelDownload/DepositExcelDownload';
 import Title from '@/components/ui/title/Title';
 import { useAuth } from '@/hooks/useAuth';
@@ -24,8 +25,12 @@ const Vklad: FC = () => {
 	const [depositName, setDepositName] = useState<string>('');
 	const { isAuth, id } = useAuth();
 	const dispathc = useAppDispatch();
-	const { investmentData, calculateInvestment, investmentInput } =
-		useInvestmentCalculator();
+	const {
+		investmentData,
+		calculateInvestment,
+		investmentInput,
+		investmentProfit
+	} = useInvestmentCalculator();
 
 	const onSubmitForm = (value: InvestmentParams) => {
 		const formattedDate = value.startDate.format('YYYY-MM-DD');
@@ -55,7 +60,6 @@ const Vklad: FC = () => {
 			setSavedData({
 				id,
 				type: 'deposit',
-				data: investmentData,
 				name: depositName,
 				initial: investmentInput!
 			})
@@ -153,6 +157,10 @@ const Vklad: FC = () => {
 				/>
 			</div>
 			<TableSection paymentData={investmentData} columns={columnsDeposit} />
+			<DepositProfitInfo
+				profit={investmentProfit}
+				initial={investmentInput?.initialDepositAmount || 0}
+			/>
 		</ServicesLayout>
 	);
 };

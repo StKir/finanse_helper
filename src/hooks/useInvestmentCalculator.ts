@@ -8,20 +8,10 @@ import { useState } from 'react';
 const useInvestmentCalculator = () => {
 	const [investmentData, setInvestmentData] = useState<InvestmentData[]>([]);
 	const [investmentInput, setinvestmentInput] = useState<InvestmentParams>();
-
-	// const getEffectiverate = (
-	// 	rete: number,
-	// 	paymentFrequency: number,
-	// 	investmentTermMonths: number
-	// ) => {
-	// 	return (
-	// 		(1 + ((rete / 100 / investmentTermMonths) % paymentFrequency)) **
-	// 			((investmentTermMonths % paymentFrequency) - 1) *
-	// 		100
-	// 	);
-	// };
+	const [investmentProfit, setInvestmentProfit] = useState<number>(0);
 
 	const calculateInvestment = (investmentInput: InvestmentParams) => {
+		setInvestmentProfit(0);
 		setinvestmentInput(investmentInput);
 		const data: InvestmentData[] = [];
 		let depositAmount = investmentInput.initialDepositAmount;
@@ -33,12 +23,6 @@ const useInvestmentCalculator = () => {
 			month++
 		) {
 			let monthlyInterest = 0;
-			// const effectiveRate = getEffectiverate(
-			// 	investmentInput.interestRate,
-			// 	investmentInput.paymentFrequency,
-			// 	investmentInput.investmentTermMonths
-			// );
-			// console.log(effectiveRate);
 
 			monthlyInterest =
 				(depositAmount * investmentInput.interestRate) / 12 / 100;
@@ -46,6 +30,7 @@ const useInvestmentCalculator = () => {
 			if (investmentInput.compoundInterest) {
 				depositAmount += monthlyInterest;
 			}
+			setInvestmentProfit((num) => num + monthlyInterest);
 			data.push({
 				Дата: currentDate.toDateString(),
 				'Начислено процентов': moneyFormat(monthlyInterest.toFixed(2)) + '₽',
@@ -69,7 +54,8 @@ const useInvestmentCalculator = () => {
 	return {
 		investmentData,
 		calculateInvestment,
-		investmentInput
+		investmentInput,
+		investmentProfit
 	};
 };
 
