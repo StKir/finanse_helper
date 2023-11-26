@@ -18,7 +18,8 @@ const DepositItemChildren: FC<ISavedData2> = (el) => {
 
 	useEffect(() => {
 		calculateInvestment({ ...el.initial });
-	}, [calculateInvestment, el.initial]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [el.initial]);
 
 	return (
 		<div>

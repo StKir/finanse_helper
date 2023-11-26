@@ -17,7 +17,8 @@ const MortageChidrenItem: FC<TChildrenProps> = (el) => {
 
 	useEffect(() => {
 		calculateMortgage(el.initial);
-	}, [calculateMortgage, el.initial]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [el.initial]);
 
 	return (
 		<div>
