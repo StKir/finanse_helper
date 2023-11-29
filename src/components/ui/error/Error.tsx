@@ -6,7 +6,7 @@ type TError = {
 	massage?: string;
 };
 
-const Error: FC<TError> = ({ massage = '', code = 0 }) => {
+const Error: FC<TError> = ({ massage = '', code = 0 }: TError) => {
 	return (
 		<div>
 			<Result
